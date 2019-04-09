@@ -11,8 +11,11 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
+	"strconv"
 )
 
 /**
@@ -47,11 +50,16 @@ func readFile(loc string) string {
  * Entradas: resultado da soma das distâncias euclidianas e slice com os
  * pontos agrupados
  */
-// func printResults(sse int) {
+func printResults(sse int, groups [][]int) {
 
-// 	// Creating the data that will be printed
+	content := strconv.Itoa(sse) // Convertendo a soma para uma string
 
-// 	if err != nil {
-// 		log.Fatalln("The result.txt file can't be created for some reason...")
-// 	}
-// }
+	err := ioutil.WriteFile("result.txt", []byte(content), os.ModeAppend) // Imprimindo a soma no arquivo devido
+
+	// Detecção de erro na abertura e escrita do arquivo:
+	if err != nil {
+		log.Fatalln("The result.txt file can't be created for some reason...")
+	}
+
+	fmt.Println(groups) // Error avoidance
+}
