@@ -22,5 +22,5 @@ func main() {
 
 	// Testando função de leitura de arquivo
 	pointsStr := readFile("entrada.txt") // Lendo o arquivo com os dados das coordenadas dos pontos
-	fmt.Println(readFile("entrada.txt"))
+	fmt.Println(pointsStr)
 }
