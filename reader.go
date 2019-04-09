@@ -61,5 +61,21 @@ func printResults(sse int, groups [][]int) {
 		log.Fatalln("The result.txt file can't be created for some reason...")
 	}
 
-	fmt.Println(groups) // Error avoidance
+	// Criação da string com os grupos resultantes do programa:
+	var groupsStr string
+	for i := 0; i < len(groups); i++ {
+		for j := 0; j < len(groups[i]); j++ {
+
+			groupsStr += strconv.Itoa(groups[i][j]) + " "
+
+		}
+		groupsStr += "\n\n"
+	}
+
+	err = ioutil.WriteFile("saida.txt", []byte(groupsStr), os.ModeAppend) // Imprimindo o arquivo com os grupos criados no algoritmo
+
+	// Detecção de erro na abertura e escrita do arquivo:
+	if err != nil {
+		log.Fatalln("The saida.txt file can't be created for some reason...")
+	}
 }
