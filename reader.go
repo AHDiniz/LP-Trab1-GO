@@ -6,12 +6,17 @@
  * Resolver problema de agrupamento com o algoritmo dado em aula
  *
  * reader.go: manipulação de arquivos para entrada e saída
+ * 
+ * ***********************************************************************************
+ * 
+ * Coisas a fazer:
+ * 
+ * 1 - Criar função para transformar a string com coordenadas em uma matriz de números
  */
 
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -78,4 +83,18 @@ func printResults(sse int, groups [][]int) {
 	if err != nil {
 		log.Fatalln("The saida.txt file can't be created for some reason...")
 	}
+}
+
+/**
+ * Convertendo string de entrada em uma matriz de números
+ * 
+ * Entrada: string com as coordenadas dos pontos
+ * 
+ * Saída: matriz em que cada posição é um vetor com as coordenadas de cada ponto
+*/
+func parseInputString(input string) [][]float64 {
+
+	var result [][]float64 = [][]float64{{1, 1}, {1, 1}}
+	return result
+
 }
