@@ -6,11 +6,11 @@
  * Resolver problema de agrupamento com o algoritmo dado em aula
  *
  * reader.go: manipulação de arquivos para entrada e saída
- * 
+ *
  * ***********************************************************************************
- * 
+ *
  * Coisas a fazer:
- * 
+ *
  * 1 - Criar função para transformar a string com coordenadas em uma matriz de números
  */
 
@@ -21,6 +21,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"fmt"
 )
 
 /**
@@ -33,7 +34,7 @@ import (
  *
  * Saída: string com o conteúdo do arquivo
  */
-func readFile(loc string) string {
+func readFile(loc string) ([]string, int) {
 
 	file, err := ioutil.ReadFile(loc) // Lendo o arquivo de entrada
 
@@ -42,7 +43,20 @@ func readFile(loc string) string {
 		log.Fatalln("The passed file can't be read for some reason...")
 	}
 
-	return string(file)
+	str := string(file) // Convertendo o conteúdo para uma string
+	lines := 0 // Número de linhas na string
+	for i := 0; i < len(str); i++ {
+		if str[i] == '\n' {
+			lines++
+		}
+	}
+
+	result := make([]string, lines)
+	for i := 0; i < lines; i++ {
+		fmt.Sscanf(str, "%s\n", result[i])
+	}
+
+	return result, lines
 }
 
 /**
@@ -87,14 +101,17 @@ func printResults(sse int, groups [][]int) {
 
 /**
  * Convertendo string de entrada em uma matriz de números
- * 
+ *
  * Entrada: string com as coordenadas dos pontos
- * 
+ *
  * Saída: matriz em que cada posição é um vetor com as coordenadas de cada ponto
-*/
-func parseInputString(input string) [][]float64 {
+ */
+func parseInputString(input string, lines int) [][]float64 {
 
 	var result [][]float64 = [][]float64{{1, 1}, {1, 1}}
+
+	
+
 	return result
 
 }
