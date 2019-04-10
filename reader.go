@@ -21,6 +21,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"bufio"
 	"fmt"
 )
 
@@ -34,29 +35,33 @@ import (
  *
  * Saída: string com o conteúdo do arquivo
  */
-func readFile(loc string) ([]string, int) {
+func readFile(loc string) []string {
 
-	file, err := ioutil.ReadFile(loc) // Lendo o arquivo de entrada
+	file, err := os.Open(loc) // Opening the file
+	defer file.Close()
 
-	// Verificação de erro na leitura do arquivo:
+	// Error checking:
 	if err != nil {
-		log.Fatalln("The passed file can't be read for some reason...")
+		log.Fatalln("The points input file couldn't be openned.")
 	}
 
-	str := string(file) // Convertendo o conteúdo para uma string
-	lines := 0 // Número de linhas na string
-	for i := 0; i < len(str); i++ {
-		if str[i] == '\n' {
-			lines++
-		}
+	// Reading the lines in the file:
+	scanner := bufio.NewScanner(file)
+	lines := 0
+	for scanner.Scan() {
+		lines++
 	}
 
-	result := make([]string, lines)
-	for i := 0; i < lines; i++ {
-		fmt.Sscanf(str, "%s\n", result[i])
+	fmt.Println(lines)
+
+	reader := bufio.NewReader(file)
+	strs := make([]string, lines)
+	i := 0
+	for line, _, _ := reader.ReadLine(); i < lines; i++ {
+		strs[i] = string(line)
 	}
 
-	return result, lines
+	return strs
 }
 
 /**
