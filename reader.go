@@ -3,15 +3,9 @@
  *
  * Alan Herculano Diniz
  *
- * Solve groupping problem with the leader algorithm
+ * Solve grouping problem with the leader algorithm
  *
  * reader.go: I/O file manipulation
- *
- * **************************************************************************************
- *
- * Things to do:
- *
- * 1 - Create function to parse string into a slice of points (wich are slices of floats)
  */
 
 package main
@@ -110,10 +104,10 @@ func getFileLines(input *os.File) ([]string, int) {
 
 	// Determining how many points where given in the file:
 	scanner := bufio.NewScanner(input)
-	var lines []string
+	var lines []string // Slice where each position is a line in the file
 	lineNum := 0
 	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+		lines = append(lines, scanner.Text()) // Appending the read line in the slice
 		lineNum++
 	}
 
@@ -121,27 +115,25 @@ func getFileLines(input *os.File) ([]string, int) {
 }
 
 /**
- * Impressão dos resultados do algoritmo
+ * Printing the algorithm's results
  *
- * A soma euclidiana das distâncias entre os pontos será impressa num
- * arquivo result.txt por meio desta função, assim como os grupos, que
- * serão impressos no arquivo saida.txt
+ * The euclidian sum of distances between the groups will be printed in
+ * a result.txt file, while the groups will be printed in a saida.txt file.
  *
- * Entradas: resultado da soma das distâncias euclidianas e slice com os
- * pontos agrupados
+ * Inputs: the euclidian sum of distances and the point groups
  */
 func printResults(sse int, groups [][]int) {
 
-	content := strconv.Itoa(sse) // Convertendo a soma para uma string
+	content := strconv.Itoa(sse) // Parsing the sum to a string
 
-	err := ioutil.WriteFile("result.txt", []byte(content), os.ModeAppend) // Imprimindo a soma no arquivo devido
+	err := ioutil.WriteFile("result.txt", []byte(content), os.ModeAppend) // Printing the sum
 
-	// Detecção de erro na abertura e escrita do arquivo:
+	// Error detection in the file operation:
 	if err != nil {
 		log.Fatalln("The result.txt file can't be created for some reason...")
 	}
 
-	// Criação da string com os grupos resultantes do programa:
+	// Creating the string with the point groups:
 	var groupsStr string
 	for i := 0; i < len(groups); i++ {
 		for j := 0; j < len(groups[i]); j++ {
@@ -154,7 +146,7 @@ func printResults(sse int, groups [][]int) {
 
 	err = ioutil.WriteFile("saida.txt", []byte(groupsStr), os.ModeAppend) // Imprimindo o arquivo com os grupos criados no algoritmo
 
-	// Detecção de erro na abertura e escrita do arquivo:
+	// Error detection in the file operation:
 	if err != nil {
 		log.Fatalln("The saida.txt file can't be created for some reason...")
 	}
