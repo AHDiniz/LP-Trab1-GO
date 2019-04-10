@@ -3,15 +3,15 @@
  *
  * Alan Herculano Diniz
  *
- * Resolver problema de agrupamento com o algoritmo dado em aula
+ * Solve groupping problem with the leader algorithm
  *
- * reader.go: manipulação de arquivos para entrada e saída
+ * reader.go: I/O file manipulation
  *
- * ***********************************************************************************
+ * **************************************************************************************
  *
- * Coisas a fazer:
+ * Things to do:
  *
- * 1 - Criar função para transformar a string com coordenadas em uma matriz de números
+ * 1 - Create function to parse string into a slice of points (wich are slices of floats)
  */
 
 package main
@@ -23,45 +23,101 @@ import (
 	"strconv"
 	"bufio"
 	"fmt"
+	"strings"
 )
 
 /**
- * Lendo o arquivo de entrada
+ * Reading the input file
  *
- * Esta função lê o arquivo de entrada e cria uma representação primitiva
- * dos dados que precisam ser manipulados
+ * This reads the file to get the point coordinates and the limit distance to create the groups
  *
- * Entrada: localização do arquivo de entrada
+ * Input: the files that must be read
  *
- * Saída: string com o conteúdo do arquivo
+ * Output: a the point slice and the maximum distance
  */
-func readFile(loc string) []string {
+func readFile(pointsLoc, distLoc string) ([][]float64, float64) {
 
-	file, err := os.Open(loc) // Opening the file
-	defer file.Close()
+	// Opening the points file:
+	pointsFile, err := os.Open(pointsLoc) // Opening the file
+	defer pointsFile.Close()
 
-	// Error checking:
 	if err != nil {
-		log.Fatalln("The points input file couldn't be openned.")
+		panic(err)
 	}
 
-	// Reading the lines in the file:
-	scanner := bufio.NewScanner(file)
-	lines := 0
+	// Opening the distance file:
+	distFile, err := os.Open(distLoc)
+	defer distFile.Close()
+
+	if err != nil {
+		panic(err)
+	}
+
+	// Reading the limit distance:
+	var dist float64
+	fmt.Fscanf(distFile, "%f", &dist)
+
+	// Getting the file's lines and the number of them:
+	lines, linesNum := getFileLines(pointsFile)
+
+	// Parsing the string slice to a point slice:
+	points := parseInputString(lines, linesNum)
+
+	return points, dist
+}
+
+/**
+ * Getting a string slice and returning the points
+ *
+ * Input: string slice with the input file lines and the amount of lines in the file
+ *
+ * Output: the float matrix containing the points' coordinates
+ */
+func parseInputString(input []string, lines int) [][]float64 {
+
+	// Determining the amount of coordinates of each point:
+	dimension := len(strings.Fields(input[0]))
+
+	// Creating the point slice:
+	var points [][]float64 = make([][]float64, lines)
+	for i := 0; i < lines; i++ {
+		points[i] = make([]float64, dimension)
+	}
+
+	// Getting the points from the string slice:
+	for i := 0; i < lines; i++ {
+
+		coordStrs := strings.Fields(input[i]) // Getting a slice with each coordinate in a string
+
+		// Getting the corrdinates in the string:
+		for j := 0; j < dimension; j++ {
+
+			fmt.Sscanf(coordStrs[j], "%f", &points[i][j])
+		}
+	}
+
+	return points
+}
+
+/**
+ * Getting a file and returning it's lines
+ *
+ * Input: the file that must be read
+ *
+ * Outputs: the string slice with the lines and the amount of lines in the file
+*/
+func getFileLines(input *os.File) ([]string, int) {
+
+	// Determining how many points where given in the file:
+	scanner := bufio.NewScanner(input)
+	var lines []string
+	lineNum := 0
 	for scanner.Scan() {
-		lines++
+		lines = append(lines, scanner.Text())
+		lineNum++
 	}
 
-	fmt.Println(lines)
-
-	reader := bufio.NewReader(file)
-	strs := make([]string, lines)
-	i := 0
-	for line, _, _ := reader.ReadLine(); i < lines; i++ {
-		strs[i] = string(line)
-	}
-
-	return strs
+	return lines, lineNum
 }
 
 /**
@@ -102,21 +158,4 @@ func printResults(sse int, groups [][]int) {
 	if err != nil {
 		log.Fatalln("The saida.txt file can't be created for some reason...")
 	}
-}
-
-/**
- * Convertendo string de entrada em uma matriz de números
- *
- * Entrada: string com as coordenadas dos pontos
- *
- * Saída: matriz em que cada posição é um vetor com as coordenadas de cada ponto
- */
-func parseInputString(input string, lines int) [][]float64 {
-
-	var result [][]float64 = [][]float64{{1, 1}, {1, 1}}
-
-	
-
-	return result
-
 }
