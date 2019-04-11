@@ -1,5 +1,5 @@
 /**
- * Linguagens de Programação - Trabalho 1
+ * Programming Languages - Assignment #1
  *
  * Alan Herculano Diniz
  *
@@ -10,10 +10,7 @@
 
 package main
 
-import (
-	"fmt"
-	"flag"
-)
+import "flag"
 
 func main() {
 
@@ -23,5 +20,7 @@ func main() {
 
 	points, dist := readFile(*pointsFile, *distFile) // Reading the files properlly
 
-	fmt.Println(points, dist)
+	sse, groups := calculateResults(dist, points) // Executing the leader algorithm
+
+	printResults(sse, groups) // Printing the algorithm results
 }

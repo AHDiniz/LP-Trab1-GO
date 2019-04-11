@@ -1,5 +1,5 @@
 /**
- * Linguagens de Programação - Trabalho 1
+ * Programming Languages - Assignment #1
  *
  * Alan Herculano Diniz
  *
@@ -12,7 +12,6 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 	"bufio"
@@ -117,20 +116,20 @@ func getFileLines(input *os.File) ([]string, int) {
 /**
  * Printing the algorithm's results
  *
- * The euclidian sum of distances between the groups will be printed in
+ * The euclidian distance sum of distances between the groups will be printed in
  * a result.txt file, while the groups will be printed in a saida.txt file.
  *
- * Inputs: the euclidian sum of distances and the point groups
+ * Inputs: the euclidian distance sum of distances and the point groups
  */
-func printResults(sse int, groups [][]int) {
+func printResults(sse float64, groups [][]int) {
 
-	content := strconv.Itoa(sse) // Parsing the sum to a string
+	content := fmt.Sprintf("%.4f", sse) // Parsing the sum to a string
 
 	err := ioutil.WriteFile("result.txt", []byte(content), os.ModeAppend) // Printing the sum
 
 	// Error detection in the file operation:
 	if err != nil {
-		log.Fatalln("The result.txt file can't be created for some reason...")
+		panic(err)
 	}
 
 	// Creating the string with the point groups:
@@ -148,6 +147,6 @@ func printResults(sse int, groups [][]int) {
 
 	// Error detection in the file operation:
 	if err != nil {
-		log.Fatalln("The saida.txt file can't be created for some reason...")
+		panic(err)
 	}
 }
