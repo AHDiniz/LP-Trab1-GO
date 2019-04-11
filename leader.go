@@ -39,7 +39,7 @@ func calculateResults(limit float64, points [][]float64) (float64, [][]int) {
 		// Checking if the current point is a leader or not and treating it accordingly:
 		for j := 0; j < len(groups); j++ {
 
-			if pointDistance(points[groups[j][0]], points[i]) <= limit {
+			if pointDistance(points[groups[j][0] - 1], points[i]) <= limit {
 
 				groups[j] = append(groups[j], i + 1)
 				leader = false
