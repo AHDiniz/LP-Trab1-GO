@@ -10,9 +10,7 @@
 
 package main
 
-import (
-	"math"
-)
+import "math"
 
 /**
  * Calculating the euclidian distance sum and the point groups
