@@ -122,7 +122,7 @@ func calculateSSE(points [][]float64, groups [][]int) float64 {
 		center := centerOfMass(points, groups[i])
 		for j := 0; j < len(groups[i]); j++ {
 
-			sse += pointDistance(points[groups[i][j] - 1], center)
+			sse += pointDistance(points[groups[i][j] - 1], center) * pointDistance(points[groups[i][j] - 1], center)
 		}
 	}
 

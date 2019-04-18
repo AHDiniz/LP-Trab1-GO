@@ -123,9 +123,9 @@ func getFileLines(input *os.File) ([]string, int) {
  */
 func printResults(sse float64, groups [][]int) {
 
-	content := fmt.Sprintf("%.4f", sse) // Parsing the sum to a string
+	content := fmt.Sprintf("%.4f\n", sse) // Parsing the sum to a string
 
-	err := ioutil.WriteFile("result.txt", []byte(content), os.ModeAppend) // Printing the sum
+	err := ioutil.WriteFile("result.txt", []byte(content), 0666) // Printing the sum
 
 	// Error detection in the file operation:
 	if err != nil {
@@ -143,7 +143,7 @@ func printResults(sse float64, groups [][]int) {
 		groupsStr += "\n\n"
 	}
 
-	err = ioutil.WriteFile("saida.txt", []byte(groupsStr), os.ModeAppend) // Imprimindo o arquivo com os grupos criados no algoritmo
+	err = ioutil.WriteFile("saida.txt", []byte(groupsStr), 0666) // Imprimindo o arquivo com os grupos criados no algoritmo
 
 	// Error detection in the file operation:
 	if err != nil {
