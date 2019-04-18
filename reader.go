@@ -72,7 +72,7 @@ func parseInputString(input []string, lines int) [][]float64 {
 	dimension := len(strings.Fields(input[0]))
 
 	// Creating the point slice:
-	var points [][]float64 = make([][]float64, lines)
+	points := make([][]float64, lines)
 	for i := 0; i < lines; i++ {
 		points[i] = make([]float64, dimension)
 	}
