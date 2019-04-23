@@ -26,7 +26,7 @@ import (
  *
  * Input: the files that must be read
  *
- * Output: a the point slice and the maximum distance
+ * Output: the points slice and the maximum distance
  */
 func readFile(pointsLoc, distLoc string) ([][]float64, float64) {
 
